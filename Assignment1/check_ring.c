@@ -6,7 +6,7 @@ int rank, size;
 int count=0;
 int recv_x;
 int recv_y;
-double t1, t2;
+double t1, t2, t3;
 MPI_Init( &argc, &argv );
 MPI_Comm_rank( MPI_COMM_WORLD,&rank);
 MPI_Comm_size( MPI_COMM_WORLD,&size );
@@ -42,5 +42,10 @@ printf("I am process %d and I have received %d messages. My final messages have 
 MPI_Finalize();
 t2 = MPI_Wtime();
 printf( "Elapsed time is %f\n", t2 - t1 );
+if (rabk==0)
+{
+t3=t2-t1;
+printf("The elapsed time for %d processor with rank 0= %d", size, t3); 
+}
 
 }
