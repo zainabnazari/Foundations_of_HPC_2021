@@ -10,7 +10,7 @@ MPI_Init( &argc, &argv );
 MPI_Comm_rank( MPI_COMM_WORLD,&rank);
 MPI_Comm_size( MPI_COMM_WORLD,&size );
 int negative_rank=-rank;
-
+t1 = MPI_Wtime()
 MPI_Send(&negative_rank,1,MPI_INTEGER,((rank+1) % size),rank * 10,MPI_COMM_WORLD);
 MPI_Send(&rank,1,MPI_INTEGER,(rank+size-1) % size,rank * 10,MPI_COMM_WORLD);
 MPI_Status status;
@@ -37,7 +37,8 @@ MPI_Recv(&recv_y,1,MPI_INTEGER,((rank+size-1) % size),MPI_ANY_TAG,MPI_COMM_WORLD
 count++;
 tag_from_left=status.MPI_TAG;
 };
-
+t2 = MPI_Wtime();
 printf("I am process %d and I have received %d messages. My final messages have tag %d and value %d,%d \n",rank, count, tag_from_left, recv_x, recv_y);
+printf( "Elapsed time is %f\n", t2 - t1 )
 MPI_Finalize();
 }
