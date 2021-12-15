@@ -42,12 +42,15 @@ count++;
 tag_from_left=status.MPI_TAG;
 };
 printf("I am process %d and I have received %d messages. My final messages have tag %d and value %d,%d \n",rank, count, tag_from_left, recv_x, recv_y);
-//printf( "Elapsed time is %f\n", t2 - t1 );
-if (rank==0)
-{
+
 t2 = MPI_Wtime();
-t3 = t2 - t1;
-printf("The elapsed time for %d processor with rank 0 is t= %d \n", size, t3); 
+printf( "Elapsed time is %f\n", t1 );
+printf( "Elapsed time is %f\n", t2 );
+printf( "Elapsed time is %f\n", t2 - t1 );
+if (rabk==0)
+{
+t3=t2-t1;
+printf("The elapsed time for %d processor with rank 0= %d", size, t3);
 }
 
 MPI_Finalize();
