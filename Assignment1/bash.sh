@@ -1,5 +1,5 @@
 #!/bin/bash
-for y in {2..20}
+for y in {2..36}
 
 do
  for x in {1..10} 
