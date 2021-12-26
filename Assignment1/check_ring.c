@@ -42,7 +42,6 @@ count++;
 tag_from_left=status.MPI_TAG;
 };
 
-//printf("I am processor %d and I have received %d messages. My final messages have tag %d and values %d, and %d \n",rank, count, tag_from_left, recv_x, recv_y);
 
 if  (rank==0){
 t2 = MPI_Wtime();
@@ -51,5 +50,3 @@ printf("%f \n",t3);
 }
 MPI_Finalize();
 }
-
-
