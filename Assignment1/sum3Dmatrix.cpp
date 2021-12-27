@@ -1,29 +1,6 @@
 #include <iostream>
 #include "mpi.h"
-int main (int argc, char * argv[]) {
-  int rank, size;
-  double r;
-  MPI_Init( &argc, &argv );
-  MPI_Comm_rank( MPI_COMM_WORLD,&rank);
-  MPI_Comm_size( MPI_COMM_WORLD,&size );
-r = ((double) rand() / (RAND_MAX));
 
-//std::cout << r << std::endl;
-int dim1, dim2, dim3;
-
-dim1 = std::stoi(argv[1]);
-dim2 = std::stoi(argv[2]);
-dim3 = std::stoi(argv[3]);
-
-int*** a=initialise_matrix3d(dim1, dim2, dim3);
-int*** b=initialise_matrix3d(dim1,dim2,dim3);
-int*** c=addition3d(a,b);
-delete3dmatrix(a, dim1, dim2);
-delete3dmatrix(b, dim1, dim2);
-
-MPI_Finalize();
-
-}
 
 void delete3dmatrix(int*** matrix3d, int rows, int columns){
 for (int i=0; i<rows; ++i){
@@ -63,4 +40,29 @@ for (int i=0; i<rows; ++i){
   }
 }
 return matrix3d;
+}
+
+int main (int argc, char * argv[]) {
+  int rank, size;
+  double r;
+  MPI_Init( &argc, &argv );
+  MPI_Comm_rank( MPI_COMM_WORLD,&rank);
+  MPI_Comm_size( MPI_COMM_WORLD,&size );
+r = ((double) rand() / (RAND_MAX));
+
+//std::cout << r << std::endl;
+int dim1, dim2, dim3;
+
+dim1 = std::stoi(argv[1]);
+dim2 = std::stoi(argv[2]);
+dim3 = std::stoi(argv[3]);
+
+int*** a=initialise_matrix3d(dim1, dim2, dim3);
+int*** b=initialise_matrix3d(dim1,dim2,dim3);
+int*** c=addition3d(a,b);
+delete3dmatrix(a, dim1, dim2);
+delete3dmatrix(b, dim1, dim2);
+
+MPI_Finalize();
+
 }
