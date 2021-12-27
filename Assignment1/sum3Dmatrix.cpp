@@ -37,7 +37,7 @@ for (int i=0; i<rows; ++i){
 delete [] matrix3d;
 }
 int*** addition3d(int*** a, int*** b, int rows, int columns, int aisles){
-  int*** matrix3d = new int*[rows];
+  int*** matrix3d = new int**[rows];
   for (int i=0; i<rows; ++i){
     matrix3d[i] = new int*[columns];
     for (int j=0; j < columns; j++){
@@ -52,7 +52,7 @@ return matrix3d;
 //double*** addthree_dim_matrices(double *** x, double *** y)
 int*** initialise_matrix3d(int rows, int columns, int aisles){
 
-int*** matrix3d = new int*[rows];
+int*** matrix3d = new int**[rows];
 for (int i=0; i<rows; ++i){
   matrix3d[i] = new int*[columns];
   for (int j=0; j < columns; j++){
