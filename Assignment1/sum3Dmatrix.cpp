@@ -63,6 +63,7 @@ int*** c=addition3d(a, b, dim1, dim2, dim3 );
 delete3dmatrix(a, dim1, dim2);
 delete3dmatrix(b, dim1, dim2);
 
+std::cout << rank << std::endl;
 MPI_Finalize();
 return 0;
 
