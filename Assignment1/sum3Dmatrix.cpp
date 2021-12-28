@@ -59,10 +59,11 @@ dim3 = std::stoi(argv[3]);
 
 int*** a=initialise_matrix3d(dim1, dim2, dim3);
 int*** b=initialise_matrix3d(dim1,dim2,dim3);
-int*** c=addition3d(a,b);
+int*** c=addition3d(a, b, dim1, dim2, dim3 );
 delete3dmatrix(a, dim1, dim2);
 delete3dmatrix(b, dim1, dim2);
 
 MPI_Finalize();
+return 0;
 
 }
