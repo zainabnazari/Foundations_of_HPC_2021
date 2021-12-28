@@ -1,18 +1,25 @@
+//Author: Zainab Nazari
+// This code sum 3 dimensional matrices using mpi.
+
 #include <iostream>
 #include "mpi.h"
 
-
-void delete3dmatrix(int*** matrix3d, int rows, int columns){
-for (int i=0; i<rows; ++i){
-
-  for (int j=0; j < columns; j++){
-
-     delete [] matrix3d[i][j];
+// This function initialise the matrix
+int*** initialise_matrix3d(int rows, int columns, int aisles){
+  int*** matrix3d = new int**[rows];
+  for (int i=0; i<rows; ++i){
+    matrix3d[i] = new int*[columns];
+    for (int j=0; j < columns; j++){
+      matrix3d[i][j] = new int[aisles];
+       for (int k=0; k< aisles; k++){
+         matrix3d[i][j][k] = ((double) rand() / (RAND_MAX));
+       }
+    }
   }
-  delete [] matrix3d[i];
+  return matrix3d;
 }
-delete [] matrix3d;
-}
+
+// this function adds up the matrices.
 int*** addition3d(int*** a, int*** b, int rows, int columns, int aisles){
   int*** matrix3d = new int**[rows];
   for (int i=0; i<rows; ++i){
@@ -24,23 +31,20 @@ int*** addition3d(int*** a, int*** b, int rows, int columns, int aisles){
        }
     }
   }
-return matrix3d;
+  return matrix3d;
 }
-//double*** addthree_dim_matrices(double *** x, double *** y)
-int*** initialise_matrix3d(int rows, int columns, int aisles){
 
-int*** matrix3d = new int**[rows];
-for (int i=0; i<rows; ++i){
-  matrix3d[i] = new int*[columns];
-  for (int j=0; j < columns; j++){
-    matrix3d[i][j] = new int[aisles];
-     for (int k=0; k< aisles; k++){
-       matrix3d[i][j][k] = ((double) rand() / (RAND_MAX));
-     }
+//This function delete the matrices to free the memory.
+void delete3dmatrix(int*** matrix3d, int rows, int columns){
+  for (int i=0; i<rows; ++i){
+    for (int j=0; j < columns; j++){
+       delete [] matrix3d[i][j];
+    }
+    delete [] matrix3d[i];
   }
+  delete [] matrix3d;
 }
-return matrix3d;
-}
+
 
 int main (int argc, char * argv[]) {
   int rank, size;
