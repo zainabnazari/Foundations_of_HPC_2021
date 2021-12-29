@@ -13,6 +13,7 @@ double*** initialise_matrix3d(int rows, int columns, int aisles){
       matrix3d[i][j] = new double[aisles];
        for (int k=0; k< aisles; k++){
          matrix3d[i][j][k] = ((double) rand() / (RAND_MAX));
+
        }
     }
   }
@@ -52,6 +53,7 @@ int main (int argc, char * argv[]) {
   MPI_Init( &argc, &argv );
   MPI_Comm_rank( MPI_COMM_WORLD,&rank);
   MPI_Comm_size( MPI_COMM_WORLD,&size );
+  srand (time(NULL)+rank*1000);
 r = ((double) rand() / (RAND_MAX));
 
 int dim1, dim2, dim3;
