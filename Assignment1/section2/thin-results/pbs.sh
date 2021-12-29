@@ -34,6 +34,10 @@ mpirun -np 2 --report-bindings --map-by node --mca pml ob1 --mca btl self,tcp --
 
 mpirun -np 2 --report-bindings --map-by node --mca pml ucx --mca btl self,tcp --mca btl_tcp_if_include ib0 ./IMB-MPI1 PingPong -msglog 28 2>/dev/null | grep -v ^\# | grep -v '^$' | sed -r 's/  */,/g' | cut -d "," -f2- >result_node_ucx_tcp_ib0.csv
 
+
+module purge 2>/dev/null
+module load intel 2>/dev/null
+
 mpiexec -np 2 -env I_MPI_DEBUG 5 -genv I_MPI_FABRICS=shm -genv  I_MPI_PIN_PROCESSOR_LIST 0,1  ./IMB-MPI1 PingPong -msglog 28 2>/dev/null | grep -v ^\# | grep -v '^$' | grep -v '^\[' | sed -r 's/  */,/g' | cut -d "," -f2- >>result_core_shm_intel.csv
 
 
