@@ -54,7 +54,10 @@ int main (int argc, char * argv[]) {
   MPI_Comm_rank( MPI_COMM_WORLD,&rank);
   MPI_Comm_size( MPI_COMM_WORLD,&size );
   srand (time(NULL)+rank*1000);
+//  std::cout<<time(NULL)+rank*1000<<std::endl;
+  
 r = ((double) rand() / (RAND_MAX));
+  //std::cout<<r<<std::endl;
 
 int dim1, dim2, dim3;
 int in_dim1, in_dim2, in_dim3;
@@ -74,18 +77,31 @@ int size_small_matrix=dim1*dim2*dim3;
 MPI_Gather(c,size_small_matrix,MPI_DOUBLE,big_matrix,size_small_matrix,MPI_DOUBLE,0,MPI_COMM_WORLD);
 
 std::cout << rank << std::endl;
-
+//
+//// Displaying the values with proper index.
+//  for (int i = 0; i <dim1; ++i) {
+//       for (int j = 0; j < dim2; ++j) {
+//           for (int k = 0; k < dim3; ++k) {
+//               std::cout << "a[" << i << "][" << j << "][" << k << "] = " << a[i][j][k] << std::endl;
+//	       std::cout << "b[" << i << "][" << j << "][" << k << "] = " << b[i][j][k] << std::endl;
+//	       std::cout << "c[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;
+//           }
+//       }
+//   }
+//
 // Displaying the values with proper index.
-   for (int i = 0; i <dim1; ++i) {
-       for (int j = 0; j < dim2; ++j) {
-           for (int k = 0; k < dim3; ++k) {
-               std::cout << "a[" << i << "][" << j << "][" << k << "] = " << a[i][j][k] << std::endl;
-	       std::cout << "b[" << i << "][" << j << "][" << k << "] = " << b[i][j][k] << std::endl;
-	       std::cout << "c[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;
+   for (int i = 0; i <in_dim1; ++i) {
+       for (int j = 0; j < in_dim2; ++j) {
+           for (int k = 0; k <in_dim3; ++k){ 
+               if  ( k<dim3){
+               std::cout << "c[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;}
+	       std::cout << "big_matrix[" << i << "][" << j << "][" << k << "] = " << big_matrix[i][j][k] << std::endl;
+	       //std::cout << "[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;
            }
        }
-   }
 
+}
+MPI_Barrier(MPI_COMM_WORLD);
 delete3dmatrix(a, dim1, dim2);
 delete3dmatrix(b, dim1, dim2);
 delete3dmatrix(c, dim1, dim2);
