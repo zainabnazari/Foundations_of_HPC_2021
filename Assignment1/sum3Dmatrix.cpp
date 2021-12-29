@@ -54,6 +54,13 @@ int main (int argc, char * argv[]) {
   MPI_Comm_rank( MPI_COMM_WORLD,&rank);
   MPI_Comm_size( MPI_COMM_WORLD,&size );
   srand (time(NULL)+rank*1000);
+  int dim_number = std::stoi(argv[4]);
+   MPI_Cart_create(MPI_COMM_WORLD,
+                     dim_number,
+                    const int* dimensions,
+                    const int* periods,
+                    int reorder,
+                    MPI_Comm* new_communicator);
 //  std::cout<<time(NULL)+rank*1000<<std::endl;
   
 r = ((double) rand() / (RAND_MAX));
@@ -102,10 +109,10 @@ std::cout << rank << std::endl;
 
 }
 MPI_Barrier(MPI_COMM_WORLD);
-delete3dmatrix(a, dim1, dim2);
-delete3dmatrix(b, dim1, dim2);
-delete3dmatrix(c, dim1, dim2);
-delete3dmatrix(big_matrix, in_dim1, in_dim2);
+//delete3dmatrix(a, dim1, dim2);
+//delete3dmatrix(b, dim1, dim2);
+//delete3dmatrix(c, dim1, dim2);
+//delete3dmatrix(big_matrix, in_dim1, in_dim2);
 MPI_Finalize();
 return 0;
 
