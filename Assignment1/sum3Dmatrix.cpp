@@ -5,12 +5,12 @@
 #include "mpi.h"
 
 // This function initialise the matrix
-int*** initialise_matrix3d(int rows, int columns, int aisles){
-  int*** matrix3d = new int**[rows];
+double*** initialise_matrix3d(int rows, int columns, int aisles){
+  double*** matrix3d = new double**[rows];
   for (int i=0; i<rows; ++i){
-    matrix3d[i] = new int*[columns];
+    matrix3d[i] = new double*[columns];
     for (int j=0; j < columns; j++){
-      matrix3d[i][j] = new int[aisles];
+      matrix3d[i][j] = new double[aisles];
        for (int k=0; k< aisles; k++){
          matrix3d[i][j][k] = ((double) rand() / (RAND_MAX));
        }
@@ -19,13 +19,13 @@ int*** initialise_matrix3d(int rows, int columns, int aisles){
   return matrix3d;
 }
 
-// this function adds up the matrices.
-int*** addition3d(int*** a, int*** b, int rows, int columns, int aisles){
-  int*** matrix3d = new int**[rows];
+// this function adds up the matrices
+double*** addition3d(double*** a, double*** b, int rows, int columns, int aisles){
+  double*** matrix3d = new double**[rows];
   for (int i=0; i<rows; ++i){
-    matrix3d[i] = new int*[columns];
+    matrix3d[i] = new double*[columns];
     for (int j=0; j < columns; j++){
-      matrix3d[i][j] = new int[aisles];
+      matrix3d[i][j] = new double[aisles];
        for (int k=0; k< aisles; k++){
          matrix3d[i][j][k]=a[i][j][k]+b[i][j][k];
        }
@@ -35,7 +35,7 @@ int*** addition3d(int*** a, int*** b, int rows, int columns, int aisles){
 }
 
 //This function delete the matrices to free the memory.
-void delete3dmatrix(int*** matrix3d, int rows, int columns){
+void delete3dmatrix(double*** matrix3d, int rows, int columns){
   for (int i=0; i<rows; ++i){
     for (int j=0; j < columns; j++){
        delete [] matrix3d[i][j];
@@ -64,16 +64,12 @@ dim1=in_dim1;
 dim2=in_dim2;
 dim3=in_dim3/size;
 
-int*** big_matrix=initialise_matrix3d(in_dim1, in_dim2, in_dim3);
-int*** a=initialise_matrix3d(dim1, dim2, dim3);
-int*** b=initialise_matrix3d(dim1,dim2,dim3);
-int*** c=addition3d(a, b, dim1, dim2, dim3 );
+double*** big_matrix=initialise_matrix3d(in_dim1, in_dim2, in_dim3);
+double*** a=initialise_matrix3d(dim1, dim2, dim3);
+double*** b=initialise_matrix3d(dim1,dim2,dim3);
+double*** c=addition3d(a, b, dim1, dim2, dim3 );
 int size_small_matrix=dim1*dim2*dim3;
 MPI_Gather(c,size_small_matrix,MPI_DOUBLE,big_matrix,size_small_matrix,MPI_DOUBLE,0,MPI_COMM_WORLD);
-delete3dmatrix(a, dim1, dim2);
-delete3dmatrix(b, dim1, dim2);
-delete3dmatrix(c, dim1, dim2);
-delete3dmatrix(big_matrix, in_dim1, in_dim2);
 
 std::cout << rank << std::endl;
 
@@ -81,11 +77,17 @@ std::cout << rank << std::endl;
    for (int i = 0; i <dim1; ++i) {
        for (int j = 0; j < dim2; ++j) {
            for (int k = 0; k < dim3; ++k) {
-               std::cout << "c[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;
+               std::cout << "a[" << i << "][" << j << "][" << k << "] = " << a[i][j][k] << std::endl;
+	       std::cout << "b[" << i << "][" << j << "][" << k << "] = " << b[i][j][k] << std::endl;
+	       std::cout << "c[" << i << "][" << j << "][" << k << "] = " << c[i][j][k] << std::endl;
            }
        }
    }
 
+delete3dmatrix(a, dim1, dim2);
+delete3dmatrix(b, dim1, dim2);
+delete3dmatrix(c, dim1, dim2);
+delete3dmatrix(big_matrix, in_dim1, in_dim2);
 MPI_Finalize();
 return 0;
 
