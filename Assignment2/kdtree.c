@@ -27,10 +27,13 @@ int point;
 int number_of_data_points;
 int median;
 
-struct knode * build_kdtree(<current data set >, int ndim, int axis)
+struct knode * build_kdtree(kpoint *points, int N,  int ndim, int axis)
 //axis  is the splitting dimension from the previous call
 // (may be -1 for the first call )
+//a leaf with the point
+if (N==1) return  *point;
 int myaxis = (axis+1)%ndim;
+int myaxis = choose_splitting_dimension (points, ndim, axis)
 struct kdnode *this_node = (struct kdnode *)malloc(sizeof(struct kdnode ));
 this_node.axis=myaxis;
 
